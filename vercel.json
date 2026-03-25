@@ -3,6 +3,10 @@
     {
       "source": "/projects/atomic-dev-tools/:path*",
       "destination": "https://atomic-dev-tools-web.vercel.app/:path*"
+    },
+    {
+      "source": "/_next/static/:path*",
+      "destination": "https://atomic-dev-tools-web.vercel.app/_next/static/:path*"
     }
   ]
 }
