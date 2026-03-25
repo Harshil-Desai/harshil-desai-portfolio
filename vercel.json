@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/projects/atomic-dev-tools/:path*",
+      "destination": "https://atomic-dev-tools.vercel.app/:path*"
+    }
+  ]
+}
