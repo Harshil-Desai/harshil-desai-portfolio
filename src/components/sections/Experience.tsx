@@ -5,12 +5,19 @@ const experiences = [
   { company: 'Halma India Pvt. Ltd.', 
     role: 'Software Engineer', 
     period: '01-2024 - Present', 
-    description: 'Delivered an event-driven, scalable asset monitoring platform, validating 2× IoT data ingestion via JMeter, building secure REST APIs (NestJS) and data-driven Angular UI, while collaborating cross-functionally on a real-time GIS system and evaluating technologies to optimize scalability and development efficiency.' 
+    points: [
+      'Built and maintained an event-driven asset monitoring SaaS platform - REST APIs (NestJS), Angular UI, and Kafka-based ingestion handling 10,000+ real-time GPS data points daily.',
+      'Designed IoT data pipeline and load-tested with JMeter to validate 10x traffic surge handling.',
+      'Collaborated on a real-time GIS system and contributed to scalability and technology evaluation decisions.',
+    ]
   },
   { company: 'Barclays Bank', 
     role: 'Business Analyst Intern', 
     period: '05-2023 - 07-2023', 
-    description: `Engineered a scalable, object-oriented API metadata platform aggregating 500+ internal APIs into a single source of truth, improving cross-team collaboration and developer productivity by 40% through strong database design and QA/QC practices.` 
+    points: [
+      'Built a centralized dashboard consolidating API metadata from Git, OpenShift, and SQL databases - single source of truth for 50+ internal APIs.',
+      'Automated data collection via REST API integrations, reducing manual reconciliation by 80% and developer query time by 60%.',
+    ]
   }
 ]
 
@@ -30,7 +37,14 @@ const Experience = () => {
           >
             <h3 className="text-sm font-semibold text-foreground">{exp.role}</h3>
             <p className="text-xs text-zinc-500 mt-0.5">{exp.company} • {exp.period}</p>
-            <p className="text-xs text-foreground-secondary mt-2 leading-relaxed">{exp.description}</p>
+            <ul className="mt-2 space-y-1.5 text-xs text-foreground-secondary">
+              {exp.points.map((point, pointIndex) => (
+                <li key={pointIndex} className="flex items-start gap-2 leading-relaxed">
+                  <span className="mt-[2px] text-zinc-500">•</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
           </motion.div>
         ))}
       </div>
