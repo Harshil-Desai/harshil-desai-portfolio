@@ -1,54 +1,54 @@
-'use client'
-import { motion } from "framer-motion"
-import { stack } from "../../lib/stack-data" // assuming you extract to file
+const STACK = [
+  { name: 'TypeScript',  color: '#3178C6' },
+  { name: 'JavaScript', color: '#F7DF1E' },
+  { name: 'Python',     color: '#3776AB' },
+  { name: 'React',      color: '#61DAFB' },
+  { name: 'Next.js',    color: 'currentColor' },
+  { name: 'Angular',    color: '#DD0031' },
+  { name: 'Vue.js',     color: '#42B883' },
+  { name: 'Tailwind',   color: '#38BDF8' },
+  { name: 'Framer',     color: '#0055FF' },
+  { name: 'Node.js',    color: '#5FA04E' },
+  { name: 'NestJS',     color: '#E0234E' },
+  { name: 'Express',    color: 'currentColor' },
+  { name: 'FastAPI',    color: '#009688' },
+  { name: 'PostgreSQL', color: '#336791' },
+  { name: 'PostGIS',    color: '#336791' },
+  { name: 'MongoDB',    color: '#47A248' },
+  { name: 'Redis',      color: '#DC382D' },
+  { name: 'SQL Server', color: '#A91D22' },
+  { name: 'Kafka',      color: 'currentColor' },
+  { name: 'Docker',     color: '#2496ED' },
+  { name: 'Git',        color: '#F05032' },
+  { name: 'Karate',     color: '#22B573' },
+  { name: 'JMeter',     color: '#D22128' },
+  { name: 'Turborepo',  color: '#EF4444' },
+  { name: 'pnpm',       color: '#F69220' },
+]
 
-const Stack = () => {
+function TechBadge({ name, color }: { name: string; color: string }) {
+  const bg = color === 'currentColor' ? 'var(--fg)' : color
+  const textColor = color === 'currentColor' ? 'var(--bg)' : 'white'
   return (
-    <section id="stack" className="py-0 px-0 my-6">
-      <h2 className="text-lg font-semibold mb-4">Tech Stack</h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {stack.map((cat, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            viewport={{ once: true }}
-            className="bg-background border border-zinc-100/50 rounded-md p-4"
-          >
-            <h3 className="text-sm font-semibold mb-3 text-foreground">{cat.category}</h3>
-
-            <div className="flex flex-wrap gap-3">
-              {cat.items.map((item, j) => {
-                const Icon = item.icon
-                return (
-                  <div key={j} className="relative group">
-                    <Icon 
-                      className="text-3xl text-foreground-secondary hover:text-foreground transition"
-                    />
-
-                    {/* Tooltip */}
-                    <span className="
-                      absolute left-1/2 -translate-x-1/2 bottom-8
-                      opacity-0 group-hover:opacity-100 
-                      pointer-events-none
-                      bg-black text-white text-xs px-2 py-1 rounded
-                      whitespace-nowrap transition
-                    ">
-                      {item.name}
-                    </span>
-                  </div>
-                )
-              })}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      <hr className="border-zinc-100 my-6" />
-    </section>
+    <span className="group inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-[var(--border)] hover:border-[var(--border-hover)] hover:bg-[var(--muted)] transition-colors cursor-default">
+      <span
+        className="w-4 h-4 rounded-[4px] flex items-center justify-center text-[9px] font-bold shrink-0"
+        style={{ background: bg, color: textColor }}
+      >
+        {name[0]}
+      </span>
+      <span className="text-[12px] text-[var(--fg-secondary)] group-hover:text-[var(--fg)]">{name}</span>
+    </span>
   )
 }
 
-export default Stack
+export default function Stack() {
+  return (
+    <section id="stack" className="my-6">
+      <h2 className="text-[15px] font-semibold tracking-tight text-[var(--fg)] mb-3">Stack</h2>
+      <div className="flex flex-wrap gap-1.5">
+        {STACK.map(s => <TechBadge key={s.name} {...s} />)}
+      </div>
+    </section>
+  )
+}

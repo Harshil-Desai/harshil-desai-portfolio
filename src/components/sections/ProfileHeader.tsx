@@ -1,153 +1,140 @@
-'use client';
+'use client'
 
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, MapPin } from 'lucide-react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
+import { MapPin, Phone, Globe, User, CreditCard, ExternalLink } from 'lucide-react'
 
-const socialLinks = [
-  { icon: Github, href: 'https://github.com/harshil-desai', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://www.linkedin.com/in/harshil-desai-a89918201/', label: 'LinkedIn' },
-  { icon: Mail, href: 'mailto:hdesai1633@gmail.com', label: 'Email' },
-];
+function Clock() {
+  const [time, setTime] = useState<Date | null>(null)
+  useEffect(() => {
+    setTime(new Date())
+    const id = setInterval(() => setTime(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
+  if (!time) return null
+  const fmt = time.toLocaleTimeString('en-GB', {
+    hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kolkata',
+  })
+  return <span className="font-mono tabular-nums">{fmt}</span>
+}
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.4, 0, 0.2, 1] as const,
-    },
-  },
-};
+function Row({ label, children }: { label: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-[110px_1fr] sm:grid-cols-[140px_1fr] py-2 gap-3 border-b border-[var(--border)] last:border-b-0">
+      <dt className="text-[12px] text-[var(--fg-muted)] flex items-center gap-1.5">{label}</dt>
+      <dd className="text-[13px] text-[var(--fg-secondary)] flex items-center flex-wrap gap-1.5">{children}</dd>
+    </div>
+  )
+}
 
 export default function ProfileHeader() {
-  return (
-    <section id='hero' className='pt-16 pb-4'>
-      {/* Cover Photo */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className='w-full aspect-3/1 rounded-lg mb-8 bg-linear-to-br from-blue-200 via-blue-100 to-blue-50 border border-zinc-100/50 overflow-hidden'
-      >
-        {/* Placeholder cover with gradient */}
-        <div className='w-full h-full bg-linear-to-r from-primary/10 to-accent/10 flex items-center justify-center text-zinc-300'>
-          {/* <span className="text-sm font-medium">[your-cover-url]</span> */}
-          <Image
-            src='/images/cover-photo2.png'
-            alt='Harshil Desai Cover'
-            width={720}
-            height={100}
-            className='object-cover'
-            priority
-          />
-        </div>
-      </motion.div>
+  const [copiedField, setCopiedField] = useState<string | null>(null)
 
-      {/* Profile Card */}
-      <motion.div variants={containerVariants} initial='hidden' animate='visible' className='space-y-6'>
-        <div className='flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6'>
-          {/* Avatar - Positioned over cover */}
-          {/* <motion.div
-            variants={itemVariants}
-            className="w-24 h-24 rounded-full bg-linear-to-br from-primary to-accent border-2 border-white/20 shadow-md flex items-center justify-center text-3xl font-bold text-white shrink-0"
-          > */}
-          <motion.div variants={itemVariants}>
+  const copy = (field: string, value: string) => {
+    navigator.clipboard?.writeText(value)
+    setCopiedField(field)
+    setTimeout(() => setCopiedField(null), 1300)
+  }
+
+  return (
+    <section id="hero" className="pt-6 pb-2">
+      {/* Avatar + name */}
+      <div className="flex items-start gap-4">
+        <div className="relative shrink-0">
+          <div className="w-[72px] h-[72px] rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--muted)]">
             <Image
-              src='/images/profilepic.png'
-              alt='Harshil Desai'
-              width={64}
-              height={64}
-              className='rounded-full'
+              src="/images/profilepic.png"
+              alt="Harshil Desai"
+              width={72}
+              height={72}
+              className="w-full h-full object-cover"
               priority
             />
-          </motion.div>
-
-          {/* Profile Info */}
-          <motion.div variants={itemVariants} className='flex-1 space-y-3 pb-1'>
-            <h1 className='text-xl font-semibold text-foreground'>Harshil Desai</h1>
-            <p className='text-xs sm:text-sm text-zinc-600'>
-              Full-Stack Engineer · React · <span className='whitespace-nowrap'>Next.js · Node.js</span>
-            </p>
-            <a
-              href='mailto:hdesai1633@gmail.com'
-              className='inline-flex items-center gap-2 px-2.5 py-1 bg-emerald-50/80 border border-emerald-200 text-emerald-700 rounded-full text-[11px] sm:text-xs font-medium hover:bg-emerald-100/80 transition-colors'
-            >
-              <span className='inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
-              Open to new opportunities
-            </a>
-            <p className='text-sm text-zinc-500'>@Harshil70781170</p>
-          </motion.div>
-          {/* Quick Actions */}
-          <motion.div variants={itemVariants} className='flex gap-2'>
-            <a
-              href='#projects'
-              className='px-3 py-1.5 bg-primary hover:bg-primary-hover text-primary-foreground text-xs font-medium rounded-lg transition-all'
-            >
-              View Projects
-            </a>
-            <a
-              href='mailto:hdesai1633@gmail.com'
-              className='px-3 py-1.5 border border-zinc-100 hover:border-primary text-foreground hover:text-primary text-xs font-medium rounded-lg transition-all'
-            >
-              Get in Touch
-            </a>
-          </motion.div>
+          </div>
+          {/* Online status dot */}
+          <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[var(--bg)]" />
         </div>
 
-        {/* Bio */}
-        <motion.p variants={itemVariants} className='text-sm text-zinc-600 leading-relaxed max-w-2xl'>
-          Software Engineer with 2+ year of experience building secure, scalable applications and RESTful APIs. Strong
-          foundation in Object-Oriented Programming, Data Structures & Algorithms, and full-stack development. Proven
-          track record in designing solutions, collaborating with cross-functional teams, and delivering features within
-          deadlines. Experienced in production systems, incident management, and following quality assurance best
-          practices.
-        </motion.p>
+        <div className="flex-1 pt-1">
+          <h1 className="text-[24px] sm:text-[28px] font-semibold tracking-tight text-[var(--fg)] leading-tight flex items-center gap-1.5 flex-wrap">
+            Harshil Desai
+            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-500 text-white shrink-0">
+              <svg viewBox="0 0 24 24" className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            </span>
+          </h1>
+          <p className="text-[13.5px] text-[var(--fg-secondary)] mt-1 leading-snug">
+            Full-stack engineer building scalable, event-driven systems. Small details matter.
+          </p>
+        </div>
+      </div>
 
-        {/* Stats Badges */}
-        <motion.div variants={itemVariants} className='flex flex-wrap gap-3'>
-          <div className='inline-flex items-center gap-1 px-3 py-1.5 bg-zinc-50 border border-zinc-100 rounded-md text-xs text-zinc-700'>
-            <MapPin className='w-3 h-3' />
-            <span>Ahmedabad, Gujarat</span>
-          </div>
-          <div className='inline-flex items-center gap-2 px-3 py-1.5 bg-zinc-50 border border-zinc-100 rounded-md text-xs text-zinc-700'>
-            <span className='text-sm font-semibold'>2Y+</span>
-            <span>Experience</span>
-          </div>
-        </motion.div>
-
-        {/* Social Links */}
-        <motion.div variants={itemVariants} className='flex gap-3'>
-          {socialLinks.map(({ icon: Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target='_blank'
-              rel='noopener noreferrer'
-              aria-label={label}
-              className='p-2 rounded-lg border border-zinc-100 hover:border-primary hover:bg-primary/5 transition-all opacity-70 hover:opacity-100'
-            >
-              <Icon className='w-4 h-4 text-foreground' />
+      {/* Overview vCard table */}
+      <div className="mt-6">
+        <h2 className="text-[15px] font-semibold tracking-tight text-[var(--fg)] mb-3">Overview</h2>
+        <dl className="text-[13px] border-y border-[var(--border)]">
+          <Row label={<><User className="w-3.5 h-3.5 opacity-60" /> Role</>}>
+            <span className="text-[var(--fg)]">Software Engineer @</span>
+            <a href="#exp-halma" className="text-[var(--fg)] underline underline-offset-2 decoration-[var(--border-hover)] hover:decoration-[var(--fg)] transition-colors">
+              Halma India
             </a>
-          ))}
-        </motion.div>
-      </motion.div>
+          </Row>
 
-      {/* Subtle divider */}
-      <hr className='border-zinc-100 my-8' />
+          <Row label={<><CreditCard className="w-3.5 h-3.5 opacity-60" /> Status</>}>
+            <span className="inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[11.5px] font-medium border border-emerald-500/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Open to opportunities
+            </span>
+          </Row>
+
+          <Row label={<><MapPin className="w-3.5 h-3.5 opacity-60" /> Location</>}>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Ahmedabad%2C+Gujarat"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[var(--fg)] hover:underline underline-offset-2"
+            >
+              Ahmedabad, Gujarat
+            </a>
+            <span className="ml-1 text-[var(--fg-muted)]">
+              <Clock />
+            </span>
+          </Row>
+
+          <Row label={<><Phone className="w-3.5 h-3.5 opacity-60" /> Phone</>}>
+            <button
+              onClick={() => copy('phone', '+91-635-473-7756')}
+              className="text-[var(--fg)] font-mono hover:underline underline-offset-2 text-left"
+            >
+              {copiedField === 'phone'
+                ? <span className="text-emerald-600">copied · +91-635-473-7756</span>
+                : '+91-635-473-7756 · click to copy'}
+            </button>
+          </Row>
+
+          <Row label={<><ExternalLink className="w-3.5 h-3.5 opacity-60" /> Email</>}>
+            <button
+              onClick={() => copy('email', 'hdesai1633@gmail.com')}
+              className="text-[var(--fg)] font-mono hover:underline underline-offset-2 text-left"
+            >
+              {copiedField === 'email'
+                ? <span className="text-emerald-600">copied · hdesai1633@gmail.com</span>
+                : 'hdesai1633@gmail.com · click to copy'}
+            </button>
+          </Row>
+
+          <Row label={<><Globe className="w-3.5 h-3.5 opacity-60" /> Website</>}>
+            <a href="https://harshildesai.me" className="text-[var(--fg)] hover:underline underline-offset-2">
+              harshildesai.me
+            </a>
+          </Row>
+
+          <Row label="Pronouns">
+            <span className="text-[var(--fg-secondary)]">he/him</span>
+          </Row>
+        </dl>
+      </div>
     </section>
-  );
+  )
 }
