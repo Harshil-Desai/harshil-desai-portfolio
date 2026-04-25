@@ -1,34 +1,30 @@
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="py-6 border-t border-zinc-100 text-center">
-      <p className="text-xs text-zinc-500 mb-1">
-        Built with Next.js, Tailwind CSS, and Framer Motion
-      </p>
-
-      <p className="text-xs text-zinc-400">
-        © {new Date().getFullYear()} Harshil Desai
-      </p>
-
-      <div className="mt-2 flex justify-center gap-4 text-xs text-zinc-500">
+    <footer className="mt-10 pt-5 border-t border-[var(--border)] pb-8">
+      <p className="text-[12px] text-[var(--fg-muted)]">
+        Built with care by{' '}
         <a
-          href="https://github.com/harshil-desai"
+          href="https://linkedin.com/in/harshil-desai-a89918201"
           target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-zinc-800 transition"
+          rel="noreferrer"
+          className="text-[var(--fg)] hover:underline underline-offset-2"
+        >
+          Harshil Desai
+        </a>
+        {'. '}Source on{' '}
+        <a
+          href="https://github.com/Harshil-Desai"
+          target="_blank"
+          rel="noreferrer"
+          className="text-[var(--fg)] hover:underline underline-offset-2"
         >
           GitHub
         </a>
-        <a
-          href="https://www.linkedin.com/in/harshil-desai-a89918201/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-zinc-800 transition"
-        >
-          LinkedIn
-        </a>
-      </div>
+        .
+      </p>
+      <p className="text-[11px] text-[var(--fg-muted)] mt-3 font-mono">
+        © {new Date().getFullYear()} · v2.0
+      </p>
     </footer>
   )
 }
-
-export default Footer

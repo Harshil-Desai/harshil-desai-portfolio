@@ -1,34 +1,21 @@
-'use client'
+const ABOUT = [
+  "Software Engineer at Halma India, shipping across the stack — Kafka-based ingestion pipelines, NestJS backends, and Angular / Vue / React frontends for IoT and GIS products.",
+  "I care about clean architecture and developer ergonomics. Recently led a multi-repo → monorepo migration and stood up a RAG-powered onboarding chatbot for our team.",
+  "Outside work I build small, opinionated tools and weird browser games. Big believer in continuous learning, polish, and a little playful curiosity in everything I build.",
+]
 
-import { motion } from 'framer-motion'
-
-const About = () => {
+export default function About() {
   return (
-    <section id="about" className="py-0 px-0 my-0">
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-      >
-        <h2 className="text-lg font-semibold mb-4 text-foreground">About</h2>
-        <div className="space-y-3">
-          <p className="text-sm text-foreground-secondary leading-relaxed">
-            I&apos;m a software engineer who loves building clean, reliable systems and solving problems in a way that 
-            actually makes life easier for people. I enjoy turning ideas into things that feel smooth, fast, and fun 
-            to use- both on the frontend and under the hood.
-          </p>
-          <p className="text-sm text-foreground-secondary leading-relaxed">
-            When I&apos;m not lost in code, I&apos;m usually experimenting with new tech, learning something random just because 
-            it seems cool, or trying to explain an idea to someone and accidentally overengineering the example. I&apos;m a 
-            big believer in continuous learning, thoughtful teamwork, and keeping a little bit of playful curiosity in 
-            everything I build.
-          </p>
-        </div>
-      </motion.div>
-      <hr className="border-zinc-100 my-6" />
+    <section id="about" className="my-6">
+      <h2 className="text-[15px] font-semibold tracking-tight text-[var(--fg)] mb-3">About</h2>
+      <ul className="space-y-2.5">
+        {ABOUT.map((p, i) => (
+          <li key={i} className="text-[13.5px] text-[var(--fg-secondary)] leading-[1.65] flex gap-2.5">
+            <span className="text-[var(--fg-muted)] mt-[8px] shrink-0">·</span>
+            <span>{p}</span>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }
-
-export default About;
