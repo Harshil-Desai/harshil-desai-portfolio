@@ -181,12 +181,12 @@ export default function CatCursor() {
         }
 
         // ── Position + horizontal flip ─────────────────────────────────────
-        //   translate(catX, catY+bob) places the local origin on screen;
-        //   scale(±1,1) mirrors the whole drawing for direction changes.
-        const sx = facingRight ? 1 : -1
+        //   SIZE scales the whole cat; ±1 mirrors for direction changes.
+        const SIZE = 0.6
+        const sx = facingRight ? SIZE : -SIZE
         catGrp.setAttribute(
           'transform',
-          `translate(${catX.toFixed(1)},${(catY + bob).toFixed(1)}) scale(${sx},1)`,
+          `translate(${catX.toFixed(1)},${(catY + bob).toFixed(1)}) scale(${sx},${SIZE})`,
         )
 
         raf = requestAnimationFrame(tick)
