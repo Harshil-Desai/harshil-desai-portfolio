@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import ThemeProviderClient from './themeprovider'
+import { SITE_URL, SITE_NAME, SITE_AUTHOR } from '@/lib/config'
 
 // Configure Inter font with variable font support
 const inter = Inter({
@@ -23,19 +24,26 @@ export const metadata: Metadata = {
   title: 'Harshil Desai - Software Engineer',
   description: 'Software Engineer crafting elegant solutions to complex problems. Passionate about building scalable systems, clean architecture, and exceptional user experiences.',
   keywords: ['software engineer', 'full stack developer', 'web development', 'react', 'nextjs', 'typescript'],
-  authors: [{ name: 'Harshil Desai' }],
+  authors: [{ name: SITE_AUTHOR }],
+  alternates: {
+    canonical: SITE_URL,
+    types: {
+      'application/rss+xml': `${SITE_URL}/feed.xml`,
+    },
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://harshildesai.com',
+    url: SITE_URL,
     title: 'Harshil Desai - Software Engineer',
     description: 'Software Engineer crafting elegant solutions to complex problems',
-    siteName: 'Harshil Desai Portfolio',
+    siteName: SITE_NAME,
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Harshil Desai - Software Engineer',
     description: 'Software Engineer crafting elegant solutions to complex problems',
+    creator: '@harshildesai',
   },
   robots: {
     index: true,

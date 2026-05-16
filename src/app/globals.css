@@ -206,3 +206,234 @@ code {
 button, a, input, textarea, select {
   transition: color 200ms, background-color 200ms, border-color 200ms, opacity 200ms;
 }
+
+/* ─── Shiki dual-theme (light / dark) ──────────────────────────────────────
+   codeToHtml() with defaultColor:false emits --shiki-light / --shiki-dark
+   inline CSS variables on every token <span>. These two rules apply the right
+   variable depending on whether .dark is present on <html>.
+   ─────────────────────────────────────────────────────────────────────────── */
+.shiki span {
+  color: var(--shiki-light);
+}
+
+.dark .shiki span {
+  color: var(--shiki-dark);
+}
+
+/* Override the inline background-color that Shiki injects on <pre> */
+.shiki,
+.dark .shiki {
+  background-color: var(--muted) !important;
+}
+
+/* ─── Blog prose ────────────────────────────────────────────────────────────
+   All styles are built from site CSS variables so dark-mode and font choices
+   come for free. Scale is intentionally slightly larger than the homepage
+   card text for long-form readability.
+   ─────────────────────────────────────────────────────────────────────────── */
+.blog-prose {
+  color: var(--fg-secondary);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* Headings */
+.blog-prose h1,
+.blog-prose h2,
+.blog-prose h3,
+.blog-prose h4 {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  line-height: 1.35;
+}
+
+.blog-prose h1 { font-size: 22px; margin-top: 0; }
+.blog-prose h2 { font-size: 17px; }
+.blog-prose h3 { font-size: 15px; }
+.blog-prose h4 { font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg-muted); }
+
+/* Paragraphs */
+.blog-prose p {
+  color: var(--fg-secondary);
+  margin-top: 0;
+  margin-bottom: 1.15em;
+  line-height: 1.75;
+}
+
+/* Links */
+.blog-prose a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border-hover);
+  transition: text-decoration-color 150ms, color 150ms;
+}
+
+.blog-prose a:hover {
+  color: var(--fg);
+  text-decoration-color: var(--fg-muted);
+}
+
+/* Lists */
+.blog-prose ul,
+.blog-prose ol {
+  margin-bottom: 1.15em;
+  padding-left: 0;
+  list-style: none;
+}
+
+.blog-prose ul li,
+.blog-prose ol li {
+  position: relative;
+  padding-left: 1.3em;
+  margin-bottom: 0.45em;
+  color: var(--fg-secondary);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Bullet dot — matches the site's · dot pattern from Experience/About */
+.blog-prose ul li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--fg-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.blog-prose ol {
+  counter-reset: list-counter;
+}
+
+.blog-prose ol li {
+  counter-increment: list-counter;
+}
+
+.blog-prose ol li::before {
+  content: counter(list-counter) '.';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  line-height: 1.9;
+}
+
+/* Blockquote */
+.blog-prose blockquote {
+  border-left: 2px solid var(--border-hover);
+  margin: 1.5em 0;
+  padding: 0.1em 0 0.1em 1.1em;
+  color: var(--fg-muted);
+  font-style: italic;
+}
+
+.blog-prose blockquote p {
+  color: var(--fg-muted);
+}
+
+/* HR */
+.blog-prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+
+/* Inline code — site-consistent muted pill */
+.blog-prose :not(pre) > code {
+  font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12.5px;
+  background-color: var(--muted);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5px 5px;
+  /* Shiki should not colorize inline code — reset any token vars */
+  color: var(--fg) !important;
+}
+
+/* Fenced code blocks — Shiki renders its own <pre> inside a wrapper div.
+   The .shiki class (added by Shiki) targets those; this rule only catches
+   plain indented code blocks that bypass CodeBlock. */
+.blog-prose .blog-code-plain {
+  background-color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 1.25em 0;
+}
+
+/* Shiki's own <pre> gets border-radius from the wrapper div, so reset
+   the default pre padding that globals.css sets above the prose block. */
+.blog-prose .shiki {
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0;
+  border-radius: 0;
+}
+
+.blog-prose pre code,
+.blog-prose .shiki code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Strong / em */
+.blog-prose strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.blog-prose em {
+  color: var(--fg-secondary);
+}
+
+/* Images */
+.blog-prose img {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  max-width: 100%;
+  margin: 1.5em 0;
+}
+
+/* Tables */
+.blog-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 1.5em 0;
+}
+
+.blog-prose th {
+  color: var(--fg);
+  font-weight: 600;
+  text-align: left;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border-hover);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.blog-prose td {
+  color: var(--fg-secondary);
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.blog-prose tr:last-child td {
+  border-bottom: none;
+}

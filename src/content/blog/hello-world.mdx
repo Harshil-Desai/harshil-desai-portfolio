@@ -1,0 +1,61 @@
+---
+title: "Hello World"
+date: "2026-05-16"
+description: "The obligatory first post — a quick note on why I'm starting to write and what to expect."
+tags: ["meta", "writing"]
+readingTime: 2
+draft: false
+---
+
+# Hello World
+
+Every blog starts here. This one is no different.
+
+I've been meaning to write publicly for a while. Notes that live only in Obsidash don't help anyone else, and explaining something in writing forces the kind of clarity that half-remembered thoughts never achieve.
+
+## What I'll write about
+
+Mostly things I'm working through at the time:
+
+- Infrastructure, Kubernetes, and the operational side of software
+- TypeScript patterns I find genuinely useful (and ones I wish I hadn't used)
+- Notes from reading papers or digging into a library's internals
+- Occasionally, non-technical stuff
+
+<Callout variant="tip">
+  If a topic shows up here it means I've spent enough time with it to have an opinion worth sharing — not just a summary of the docs.
+</Callout>
+
+## What this isn't
+
+A content calendar. I'll write when I have something worth saying.
+
+<Callout variant="warning" title="Caveat">
+  Everything here reflects my understanding at the time of writing. Systems change, I change my mind, and the internet is forever — I'll add correction notes rather than quietly editing posts.
+</Callout>
+
+## A code example to prove the pipeline works
+
+```typescript
+type Post = {
+  slug: string
+  title: string
+  date: string
+  description: string
+  tags: string[]
+  readingTime: number
+  draft: boolean
+}
+```
+
+## An interactive component to prove the embed pipeline works
+
+The number below counts up from zero when it scrolls into view — a `<AnimatedCounter />` rendered inline inside MDX via the interactives registry:
+
+<AnimatedCounter to={1847} label="lines of code written building this blog" duration={2} />
+
+And here's a second one showing the unit prop:
+
+<AnimatedCounter from={0} to={99} unit="%" label="posts I still haven't written" duration={1.4} />
+
+That's it. More soon.

@@ -5,13 +5,18 @@ import { useTheme } from 'next-themes'
 import { Search, Sun, Moon } from 'lucide-react'
 import { CommandDialog } from '@/components/ui/command-dialog'
 
-const navigation = [
-  { name: 'Projects',   href: '#projects' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Stack',      href: '#stack' },
+const SECTIONS = [
+  { name: 'Projects',   href: '/#projects' },
+  { name: 'Experience', href: '/#experience' },
+  { name: 'Stack',      href: '/#stack' },
+  { name: 'Writing',    href: '/blog' },
 ]
 
-export default function Nav() {
+interface NavProps {
+  posts?: { name: string; href: string; description?: string }[]
+}
+
+export default function Nav({ posts = [] }: NavProps) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { resolvedTheme, setTheme } = useTheme()
@@ -52,7 +57,7 @@ export default function Nav() {
 
           {/* Center nav links */}
           <div className="hidden sm:flex items-center gap-0.5">
-            {navigation.map(item => (
+            {SECTIONS.map(item => (
               <a
                 key={item.name}
                 href={item.href}
@@ -84,7 +89,7 @@ export default function Nav() {
         </div>
       </nav>
 
-      <CommandDialog open={open} setOpen={setOpen} navigation={navigation} />
+      <CommandDialog open={open} setOpen={setOpen} sections={SECTIONS} posts={posts} />
     </>
   )
 }
