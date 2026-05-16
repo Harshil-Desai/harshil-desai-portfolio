@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import ThemeProviderClient from './themeprovider'
+import CatCursor from '@/components/CatCursor'
 import { SITE_URL, SITE_NAME, SITE_AUTHOR } from '@/lib/config'
 
 // Configure Inter font with variable font support
@@ -62,6 +63,7 @@ export default function RootLayout({
         <ThemeProviderClient>
           {children}
         </ThemeProviderClient>
+        <CatCursor />
       </body>
     </html>
   )
