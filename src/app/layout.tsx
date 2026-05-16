@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import ThemeProviderClient from './themeprovider'
+import CatCursor from '@/components/CatCursor'
 
 // Configure Inter font with variable font support
 const inter = Inter({
@@ -54,6 +55,7 @@ export default function RootLayout({
         <ThemeProviderClient>
           {children}
         </ThemeProviderClient>
+        <CatCursor />
       </body>
     </html>
   )
